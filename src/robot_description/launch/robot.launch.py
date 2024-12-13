@@ -40,11 +40,19 @@ def generate_launch_description():
         }],
         output='screen'
     )
-
+   # Rviz2
+    rviz2 = Node(
+        package='rviz2',
+        executable='rviz2',
+        output='screen',
+        name='sim_rviz2',
+        arguments=['-d' + os.path.join(pkg_project_description, 'rviz', 'rviz.rviz')]
+    )
     return LaunchDescription([
         gz_sim,
         DeclareLaunchArgument('frame_id', default_value='odom', description='Frame ID of the parent frame'),
         DeclareLaunchArgument('child_frame_id', default_value='base_link', description='Frame ID of the child frame'),
         bridge,
+        rviz2,
         
         ])

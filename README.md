@@ -22,6 +22,7 @@ This package contains all necessary files to describe the Nomeer Robot and manag
     ```
 - **models/**: Contains the Nomeer Robot’s SDF file.
 - **worlds/**: Includes the `tugbot_warehouse.sdf` file for the simulation environment.
+- **rviz/** :  Includes the rviz2 configration file.
 - **CMakeLists.txt** and **package.xml**: Required files for building and defining package dependencies.
 
 ### 2. **teleop_twist_keyboard**
