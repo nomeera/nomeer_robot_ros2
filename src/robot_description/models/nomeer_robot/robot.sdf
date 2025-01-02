@@ -9,11 +9,6 @@
         <static>false</static>
 
         <!-- links-->
-        <!-- odom -->
-        <!---negativeink name="odom">
-            <pose relative_to="__model__">0 0 0 0 0 0</pose>
-        </link-->
-
         <!-- base_link -->
         <link name="base_link">
 
@@ -323,13 +318,6 @@
 
 
         <!-- joins -->
-        <!-- base_joint -->
-<!--    <joint name="base_joint" type="fixed">
-            <pose relative_to='base_link' />
-            <parent>odom</parent>
-            <child>base_link</child>
-        </joint>
--->
         <!-- body_joint -->
         <joint name="body_joint" type="fixed">
             <pose relative_to='body_link' />
@@ -402,6 +390,19 @@
             <odom_publish_frequency>1</odom_publish_frequency>
             <topic>cmd_vel</topic>
         </plugin>
+
+        <!-- joint state publisher plugin -->
+        <plugin
+            filename="libignition-gazebo-joint-state-publisher-system"
+            name="ignition::gazebo::systems::JointStatePublisher">
+            <joint_name>body_joint</joint_name>
+            <joint_name>right_wheel_joint</joint_name>
+            <joint_name>left_wheel_joint</joint_name>
+            <joint_name>caster_joint</joint_name>
+            <joint_name>camera_joint</joint_name>
+            <joint_name>lidar_joint</joint_name>
+        </plugin>
+
 
     </model>
 

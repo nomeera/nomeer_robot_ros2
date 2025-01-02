@@ -17,12 +17,12 @@ find_package(ros_gz_bridge REQUIRED)
 # install pkg directories
 install(
   DIRECTORY
-    config
-    launch
-    models
-    worlds
+  config
+  launch
+  models
+  worlds
   DESTINATION
-    share/${PROJECT_NAME}/
+  share/${PROJECT_NAME}/
 )
 
 if(BUILD_TESTING)
@@ -36,9 +36,5 @@ if(BUILD_TESTING)
   set(ament_cmake_cpplint_FOUND TRUE)
   ament_lint_auto_find_test_dependencies()
 endif()
-
-
-
-
 
 ament_package()
