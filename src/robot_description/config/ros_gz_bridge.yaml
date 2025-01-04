@@ -3,6 +3,11 @@
   ros_type_name: "geometry_msgs/msg/Twist"
   gz_type_name: "gz.msgs.Twist"
   direction: ROS_TO_GZ
+- ros_topic_name: "/steer_angle"
+  gz_topic_name: "/model/nomeer_robot/steer_angle"
+  ros_type_name: "std_msgs/msg/Float64"
+  gz_type_name: "gz.msgs.Double"
+  direction: ROS_TO_GZ
 - ros_topic_name: "/drive"
   gz_topic_name: "/drive"
   ros_type_name: "std_msgs/msg/Float64"
