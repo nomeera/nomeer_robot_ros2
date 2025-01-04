@@ -36,7 +36,7 @@ This package allows users to control the Nomeer Robot via keyboard input. It pro
 ### Prerequisites
 Ensure you have the following installed:
 - ROS 2 (Humble)
-- Gazebo Fortress
+- Gazebo Harmonic
 
 ### Installation
 1. Clone the repository to your workspace:
@@ -73,6 +73,18 @@ ros2 launch robot_description robot.launch.py
 Use the on-screen instructions to control the robot with your keyboard.
 
 ---
+
+
+## Robot Images
+#### Robot Frames
+![](Docs/robot_frames.jpg)
+
+#### Rviz
+
+![](/Docs/robot_rviz.png)
+
+#### Gazebo
+![](/Docs/robot_gazebo.png)
 
 ## Future Plans
 - Expand simulation environments.
