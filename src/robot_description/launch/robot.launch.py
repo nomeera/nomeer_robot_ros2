@@ -2,6 +2,7 @@ import os  # Provides utilities for handling file paths and interacting with the
 from ament_index_python.packages import (
     get_package_share_directory,
 )  # Retrieves the share directory of a ROS 2 package.
+import xml.etree.ElementTree as ET
 
 # these modules define the structure and actions of the launch file.
 from launch import LaunchDescription
@@ -13,6 +14,22 @@ from launch.substitutions import PathJoinSubstitution
 # Used to define and launch ROS 2 nodes
 from launch_ros.actions import Node
 
+def modify_sdf_file(sdf_file): # modify_sdf_file to fix ball joint error appear in rviz
+    # Parse the SDF XML
+    tree = ET.parse(sdf_file)
+    root = tree.getroot()
+
+    # Find all joints in the SDF
+    for joint in root.findall(".//joint"):
+        joint_type = joint.get("type")
+        if joint_type == "ball":
+            print(f"Changing joint '{joint.get('name')}' from 'ball' to 'fixed'")
+            joint.set("type", "fixed")
+
+    # Write back to a temporary file
+    modified_sdf_file = sdf_file.replace(".sdf", "_modified.sdf")
+    tree.write(modified_sdf_file)
+    return modified_sdf_file
 
 def generate_launch_description():
 
@@ -22,9 +39,10 @@ def generate_launch_description():
 
     # load sdf file
     sdf_file = os.path.join(
-        pkg_project_description, "models", "nomeer_robot", "robot_2.sdf"
+        pkg_project_description, "models", "nomeer_robot", "robot_1.sdf"
     )
-    with open(sdf_file, "r") as infp:
+    modified_sdf_file = modify_sdf_file(sdf_file)
+    with open(modified_sdf_file, "r") as infp:
         robot_desc = infp.read()
           # Reads the content of the SDF file into a string for use in other components.
 
@@ -37,7 +55,7 @@ def generate_launch_description():
         ),
         launch_arguments={
             "gz_args": PathJoinSubstitution(
-                [pkg_project_description, "worlds", "default.sdf"]
+                [pkg_project_description, "worlds", "industrial-warehouse.sdf"]
             )
         }.items(),
     )

@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<sdf version="1.10">
+<sdf version="1.9">
     <world name="car_world">
         <physics name="1ms" type="ignored">
             <max_step_size>0.001</max_step_size>
@@ -65,7 +65,7 @@
         </model>
 
         <include>
-            <uri>/home/nomeer/NoMeEr/Robotics-Software/ros2/nomeer_robot/src/robot_description/models/nomeer_robot/robot_2.sdf</uri>
+            <uri>/home/nomeer/NoMeEr/Robotics-Software/ros2/nomeer_robot/src/robot_description/models/nomeer_robot/robot_1.sdf</uri>
         </include>
 
     </world>

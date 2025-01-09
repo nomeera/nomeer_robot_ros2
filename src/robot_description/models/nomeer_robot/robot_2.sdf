@@ -363,13 +363,15 @@
             <parent>base_link</parent>
             <child>front_right_wheel_link</child>
             <axis>
-                <xyz expressed_in='__model__'>0 1 0</xyz>
+                <xyz>0 1 0</xyz>
                 <limit>
-                    <lower>-1.79769e+308</lower>    <!--negative
-                    infinity-->
-                    <upper>1.79769e+308</upper>     <!--positive
-                    infinity-->
+                    <lower>-inf</lower>
+                    <upper>inf</upper>
                 </limit>
+                <dynamics>
+                    <spring_reference>0</spring_reference>
+                    <spring_stiffness>0</spring_stiffness>
+                </dynamics>
             </axis>
         </joint>
 
@@ -379,13 +381,15 @@
             <parent>base_link</parent>
             <child>front_left_wheel_link</child>
             <axis>
-                <xyz expressed_in='__model__'>0 1 0</xyz>
+                <xyz>0 1 0</xyz>
                 <limit>
-                    <lower>-1.79769e+308</lower>    <!--negative
-                    infinity-->
-                    <upper>1.79769e+308</upper>     <!--positive
-                    infinity-->
+                    <lower>-inf</lower>
+                    <upper>inf</upper>
                 </limit>
+                <dynamics>
+                    <spring_reference>0</spring_reference>
+                    <spring_stiffness>0</spring_stiffness>
+                </dynamics>
             </axis>
         </joint>
 
@@ -399,9 +403,13 @@
                 <limit>
                     <lower>-0.6</lower>
                     <upper>0.6</upper>
-                    <velocity>1000</velocity>
-                    <effort>1000</effort>
+                    <velocity>1.0</velocity>
+                    <effort>25</effort>
                 </limit>
+                <dynamics>
+                    <spring_reference>0</spring_reference>
+                    <spring_stiffness>0</spring_stiffness>
+                </dynamics>
             </axis>
         </joint>
 
@@ -415,9 +423,13 @@
                 <limit>
                     <lower>-0.6</lower>
                     <upper>0.6</upper>
-                    <velocity>1000</velocity>
-                    <effort>1000</effort>
+                    <velocity>1.0</velocity>
+                    <effort>25</effort>
                 </limit>
+                <dynamics>
+                    <spring_reference>0</spring_reference>
+                    <spring_stiffness>0</spring_stiffness>
+                </dynamics>
             </axis>
         </joint>
 
@@ -427,13 +439,15 @@
             <parent>base_link</parent>
             <child>rear_right_wheel_link</child>
             <axis>
-                <xyz expressed_in='__model__'>0 1 0</xyz>
+                <xyz>0 1 0</xyz>
                 <limit>
-                    <lower>-1.79769e+308</lower>    <!--negative
-                    infinity-->
-                    <upper>1.79769e+308</upper>     <!--positive
-                    infinity-->
+                    <lower>-inf</lower>
+                    <upper>inf</upper>
                 </limit>
+                <dynamics>
+                    <spring_reference>0</spring_reference>
+                    <spring_stiffness>0</spring_stiffness>
+                </dynamics>
             </axis>
         </joint>
 
@@ -443,13 +457,15 @@
             <parent>base_link</parent>
             <child>rear_left_wheel_link</child>
             <axis>
-                <xyz expressed_in='__model__'>0 1 0</xyz>
+                <xyz>0 1 0</xyz>
                 <limit>
-                    <lower>-1.79769e+308</lower>    <!--negative
-                    infinity-->
-                    <upper>1.79769e+308</upper>     <!--positive
-                    infinity-->
+                    <lower>-inf</lower>
+                    <upper>inf</upper>
                 </limit>
+                <dynamics>
+                    <spring_reference>0</spring_reference>
+                    <spring_stiffness>0</spring_stiffness>
+                </dynamics>
             </axis>
         </joint>
 
@@ -470,7 +486,7 @@
 
         <!-- plugins -->
         <!-- joint_controller plugin-->
-        <plugin
+        <!--plugin
             filename="gz-sim-joint-controller-system"
             name="gz::sim::systems::JointController">
             <joint_name>front_left_wheel_joint</joint_name>
@@ -478,25 +494,28 @@
             <joint_name>rear_right_wheel_joint</joint_name>
             <joint_name>front_right_wheel_joint</joint_name>
             <topic>drive</topic>
-        </plugin>
+        </plugin-->
 
         <!-- ackermann plugin -->
         <plugin
             filename="gz-sim-ackermann-steering-system"
             name="gz::sim::systems::AckermannSteering">
-            <steering_only>true</steering_only>
-            <steer_p_gain>3.0</steer_p_gain>
+            <left_joint>rear_left_wheel_joint</left_joint>
+            <left_joint>front_left_wheel_joint</left_joint>
+            <right_joint>rear_right_wheel_joint</right_joint>
+            <right_joint>front_right_wheel_joint</right_joint>
             <left_steering_joint>steering_front_left_joint</left_steering_joint>
             <right_steering_joint>steering_front_right_joint</right_steering_joint>
-            <kingpin_width>0.199</kingpin_width>
+            <kingpin_width>0.13</kingpin_width>
             <steering_limit>0.4</steering_limit>
-            <wheel_base>0.35</wheel_base>
-            <wheel_separation>0.1</wheel_separation>
-            <wheel_radius>0.01825</wheel_radius>
+            <wheel_base>0.23521</wheel_base>
+            <wheel_separation>0.164</wheel_separation>
+            <wheel_radius>0.0345</wheel_radius>
             <min_velocity>-10.0</min_velocity>
             <max_velocity>10.0</max_velocity>
             <min_acceleration>-10</min_acceleration>
             <max_acceleration>10</max_acceleration>
+            <topic>/cmd_vel</topic>
         </plugin>
 
         <!-- joint_state_publisher plugin -->

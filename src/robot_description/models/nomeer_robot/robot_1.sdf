@@ -1,21 +1,22 @@
 <?xml version="1.0"?>
 
-<sdf version="1.11">
+<sdf version="1.9">
 
     <!-- nomeer_robot model -->
     <model name='nomeer_robot' canonical_link='base_link'>
 
-        <pose>0 0 0 0 0 3.141592654</pose>
         <static>false</static>
+        <self_collide>false</self_collide>
 
         <!-- links-->
-        <!-- base_footprint link -->
-        <!--link name="base_footprint" /-->
-        <!-- base_link -->
+        <!-- base_footprint -->
+        <link name="base_footprint" />
         <link name="base_link">
-
             <pose relative_to='__model__'>0 0 0.35 0 0 0</pose>
-
+            <!--link
+            name="base_link"-->
+            <!--pose>0
+            0 0.35 0 0 0</pose-->
             <inertial>
                 <mass>8.0</mass>
                 <inertia>
@@ -28,7 +29,8 @@
                 </inertia>
             </inertial>
 
-            <visual name='visual'>
+            <visual
+                name='visual'>
                 <geometry>
                     <box>
                         <size>0.8 0.6 0.5</size>
@@ -41,7 +43,8 @@
                 </material>
             </visual>
 
-            <collision name='collision'>
+            <collision
+                name='collision'>
                 <geometry>
                     <box>
                         <size>0.8 0.6 0.5</size>
@@ -91,11 +94,14 @@
 
         </link>
 
+        <!-- right_wheel arbitrary frame -->
+        <frame name="right_wheel_frame" attached_to='base_link'>
+            <pose>-0.25 0.25 -0.25 1.5707 0 0</pose>
+        </frame>
         <!-- right_wheel_link-->
         <link name="right_wheel_link">
 
-            <pose relative_to="base_link">-0.25 0.25 -0.25 1.5707 0 0</pose>
-
+            <pose relative_to="right_wheel_frame" />
             <inertial>
                 <mass>0.4</mass>
                 <inertia>
@@ -122,7 +128,8 @@
                 </material>
             </visual>
 
-            <collision name='collision'>
+            <collision
+                name='collision'>
                 <geometry>
                     <cylinder>
                         <radius>0.1</radius>
@@ -133,10 +140,15 @@
 
         </link>
 
+        <!-- left_wheel arbitrary frame -->
+        <frame name="left_wheel_frame" attached_to='base_link'>
+            <pose>-0.25 -0.25 -0.25 1.5707 0 0</pose>
+        </frame>
+
         <!-- left_wheel_link-->
         <link name="left_wheel_link">
 
-            <pose relative_to="base_link">-0.25 -0.25 -0.25 1.5707 0 0</pose>
+            <pose relative_to="left_wheel_frame"/>
 
             <inertial>
                 <mass>0.4</mass>
@@ -219,7 +231,6 @@
         <link name="camera_link">
 
             <pose relative_to="base_link">-0.225 0 1.05 0 0 0</pose>
-
             <visual name='visual'>
                 <geometry>
                     <box>
@@ -243,6 +254,7 @@
 
             <sensor name="camera" type="camera">
                 <pose relative_to='camera_link'>0 0 0 0 0 0</pose>
+                <topic>camera</topic>
                 <camera>
                     <horizontal_fov>1.047</horizontal_fov>
                     <image>
@@ -269,8 +281,8 @@
             <visual name='visual'>
                 <geometry>
                     <cylinder>
-                        <radius>0.05</radius>
-                        <length>0.05</length>
+                        <radius>0.0125</radius>
+                        <length>0.0125</length>
                     </cylinder>
                 </geometry>
                 <material> <!-- white color -->
@@ -283,13 +295,13 @@
             <collision name='collision'>
                 <geometry>
                     <cylinder>
-                        <radius>0.05</radius>
-                        <length>0.05</length>
+                        <radius>0.0125</radius>
+                        <length>0.0125</length>
                     </cylinder>
                 </geometry>
             </collision>
 
-            <sensor name='lidar' type='gpu_lidar'>
+            <sensor name='gpu_lidar' type='gpu_lidar'>
                 <pose relative_to='lidar_link'>0 0 0 0 0 0</pose>
                 <topic>lidar</topic>
                 <update_rate>10</update_rate>
@@ -301,21 +313,33 @@
                             <min_angle>-1.5707</min_angle>
                             <max_angle>1.5707</max_angle>
                         </horizontal>
+                        <vertical>
+                            <samples>1</samples>
+                            <resolution>0.01</resolution>
+                            <min_angle>0</min_angle>
+                            <max_angle>0</max_angle>
+                        </vertical>
                     </scan>
                     <range>
                         <min>0.15</min>
-                        <max>25</max>
+                        <max>25.0</max>
                         <resolution>0.01</resolution>
                     </range>
                 </ray>
+                <gz_frame_id>lidar_link</gz_frame_id>
                 <always_on>1</always_on>
                 <visualize>true</visualize>
-                <update_rate>10</update_rate>
             </sensor>
 
         </link>
 
         <!-- joins -->
+        <!-- base_joint -->
+        <joint name="base_joint" type="fixed">
+            <parent>base_link</parent>
+            <child>base_footprint</child>
+            <pose>0.0 0.0 -0.04 0 0 0</pose>
+        </joint>
         <!-- body_joint -->
         <joint name="body_joint" type="fixed">
             <pose relative_to='body_link' />
@@ -355,8 +379,9 @@
             </axis>
         </joint>
 
-        <!-- caster joint -->
-        <joint name='caster_joint' type='ball'>
+        <!-- caster_joint -->
+        <joint name="caster_joint" type='ball'>
+            <pose relative_to="caster_link" />
             <parent>base_link</parent>
             <child>caster_link</child>
         </joint>
@@ -377,13 +402,6 @@
 
 
         <!-- plugins -->
-        <!-- lidar plugin -->
-        <plugin
-            filename="gz-sim-sensors-system"
-            name="gz::sim::systems::Sensors">
-            <render_engine>ogre2</render_engine>
-        </plugin>
-
         <!-- diff_drive_plugin -->
         <plugin
             filename="gz-sim-diff-drive-system"
@@ -392,8 +410,10 @@
             <right_joint>right_wheel_joint</right_joint>
             <wheel_separation>0.5</wheel_separation>
             <wheel_radius>0.1</wheel_radius>
-            <odom_publish_frequency>1</odom_publish_frequency>
             <topic>cmd_vel</topic>
+            <odom_topic>/odom</odom_topic>
+            <frame_id>odom</frame_id>
+            <child_frame_id>base_link</child_frame_id>
         </plugin>
 
         <!-- joint state publisher plugin -->
@@ -408,7 +428,15 @@
             <joint_name>lidar_joint</joint_name>
         </plugin>
 
-
+        <plugin
+            filename="gz-sim-odometry-publisher-system"
+            name="gz::sim::systems::OdometryPublisher">
+            <odom_frame>odom</odom_frame>
+            <odom_covariance_topic>odometry_with_covariance</odom_covariance_topic>
+            <tf_topic>tf</tf_topic>
+            <robot_base_frame>base_footprint</robot_base_frame>
+            <odom_topic>odom</odom_topic>
+        </plugin>
     </model>
 
 
