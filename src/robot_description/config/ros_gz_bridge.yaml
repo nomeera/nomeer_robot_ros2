@@ -18,11 +18,11 @@
   ros_type_name: "rosgraph_msgs/msg/Clock"
   gz_type_name: "gz.msgs.Clock"
   direction: GZ_TO_ROS
-#- ros_topic_name: "/odom"
-#  gz_topic_name: "/odom"
-#  ros_type_name: "nav_msgs/msg/Odometry"
-#  gz_type_name: "gz.msgs.Odometry"
-#  direction: GZ_TO_ROS
+- ros_topic_name: "/odom"
+  gz_topic_name: "/odom"
+  ros_type_name: "nav_msgs/msg/Odometry"
+  gz_type_name: "gz.msgs.Odometry"
+  direction: GZ_TO_ROS
 - ros_topic_name: "/lidar"
   gz_topic_name: "/lidar"
   ros_type_name: "sensor_msgs/msg/LaserScan"
