@@ -14,7 +14,8 @@ from launch.substitutions import PathJoinSubstitution
 # Used to define and launch ROS 2 nodes
 from launch_ros.actions import Node
 
-def modify_sdf_file(sdf_file): # modify_sdf_file to fix ball joint error appear in rviz
+#  modify_sdf_file to fix ball joint error appear in rviz
+def modify_sdf_file(sdf_file):
     # Parse the SDF XML
     tree = ET.parse(sdf_file)
     root = tree.getroot()
@@ -39,7 +40,7 @@ def generate_launch_description():
 
     # load sdf file
     sdf_file = os.path.join(
-        pkg_project_description, "models", "nomeer_robot", "robot_1.sdf"
+        pkg_project_description, "models", "nomeer_robot", "robot.sdf"
     )
     modified_sdf_file = modify_sdf_file(sdf_file)
     with open(modified_sdf_file, "r") as infp:
@@ -66,6 +67,9 @@ def generate_launch_description():
         executable="joint_state_publisher",
         name="joint_state_publisher",
         output="both",
+        parameters=[
+            {"use_sim_time": True},
+        ],
     )
 
     # Takes the description and joint angles as inputs and publishes the 3D poses of the robot links
@@ -101,8 +105,8 @@ def generate_launch_description():
         executable="rviz2",
         output="screen",
         name="sim_rviz2",
-        arguments=["-d", os.path.join(pkg_project_description, "rviz", "rviz.rviz")],
-    )
+        arguments=['-d', 'src/robot_description/rviz/rviz.rviz']    
+        )
 
     return LaunchDescription([
         gz_sim,

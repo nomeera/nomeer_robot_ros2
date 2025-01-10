@@ -274,7 +274,7 @@
         <include>
             <pose>0 -0.3 0.04 0 0 0</pose>
             <uri>
-                /home/nomeer/NoMeEr/Robotics-Software/ros2/nomeer_robot/src/robot_description/models/nomeer_robot/robot_1.sdf</uri>
+                src/robot_description/models/nomeer_robot/robot.sdf</uri>
         </include>
 
     </world>
