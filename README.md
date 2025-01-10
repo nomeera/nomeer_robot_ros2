@@ -86,9 +86,6 @@ Use the on-screen instructions to control the robot with your keyboard.
 #### Gazebo
 ![](/Docs/Gazebo.png)
 
-### Video
-![](/Docs/Screencast.mp4)
-
 ## Future Plans
 - Implement autonomous navigation.
 ---
