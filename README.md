@@ -1,9 +1,9 @@
 # Nomeer Robot
 
 ## Overview
-The **Nomeer Robot** is a custom robot designed using ROS 2. This project includes two main packages:
+The **Nomeer Robot** is a diff robot designed using ROS 2. This project includes two main packages:
 
-1. **robot_description** - Handles the robot’s physical description and Gazebo integration.
+1. **robot_description** - Handles the robot’s physical description and Gazebo, Rviz integration.
 2. **teleop_twist_keyboard** - Enables manual control of the robot using keyboard inputs.
 
 ---
@@ -46,7 +46,7 @@ Ensure you have the following installed:
 2. Build the workspace:
    ```bash
    cd <workspace>
-   colcon build
+   colcon build --symlink-install --allow-overriding teleop_twist_keyboard
    ```
 3. Source the workspace:
    ```bash
@@ -75,22 +75,22 @@ Use the on-screen instructions to control the robot with your keyboard.
 ---
 
 
-## Robot Images
+## nomeer_robot
 #### Robot Frames
-![](Docs/robot_frames.jpg)
+![](Docs/frames.png)
 
 #### Rviz
 
-![](/Docs/robot_rviz.png)
+![](/Docs/Rviz.png)
 
 #### Gazebo
-![](/Docs/robot_gazebo.png)
+![](/Docs/Gazebo.png)
+
+### Video
+![](/Docs/Screencast.mp4)
 
 ## Future Plans
-- Expand simulation environments.
 - Implement autonomous navigation.
-- Add more robot features such as sensors and manipulators.
-
 ---
 
 ## License
